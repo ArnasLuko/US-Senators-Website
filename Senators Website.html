@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>senators</title>
+<style>
+    /* Containers for info holding DIVS*/
+        #container1{
+        display: inline-block;
+        z-index: 1;
+        float:left;
+        width: 40%;
+    }
+    
+    #container2{
+        z-index: 20;
+        float:right;
+        width: 60%;
+        min-width: 60%;
+    }
+    /*Style for h1, h2, h3, header, image*/
+    h1{
+        text-align:center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    h2{
+        text-align:center;
+        font-family: 'Helvetica', 'Arial', sans-serif;
+    }
+    
+    h3 {
+        text-align:center;
+        font-size: 25px;
+    }
+
+    header{
+        text-align: center;
+        background: #009870;
+        color: #ffffff;
+        padding:20px 0px;
+        margin: auto;
+        position: relative;
+        width:95%;
+    }
+
+    #congress{
+        margin: auto;
+        position: relative;
+        width:95%;
+    }
+
+    img{
+        width:100%;
+        height:100%
+    }
+    /*Div displaying the senator count according to party*/
+    #total_sen{
+    float:center;
+    font-size: 20px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    }
+    
+    /*Div displaying the senators with leadership roles*/
+    #leader_sen{
+        float: center;
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        font-size: 18px;
+        text-align:center;
+    }
+    /*Table displaying the senator count according to party*/
+    #all_sens {
+        overflow-y: hidden;
+        overflow-x: auto;
+        tab-size: 100%;
+        width:100%;
+    }
+
+    /*Center the tables and make it move relative to the page*/
+    #all_sens table, #extra_info table{
+        table-layout: fixed;
+        overflow: inherit;
+        position:relative;
+        margin-left: auto;
+        margin-right: auto;
+    }
+     /*Designing the tables */
+    #all_sens table,th,td, #extra_info table,th,td{
+        display:auto;
+        overflow: auto;
+        position: relative;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        border-collapse: collapse;
+        padding: 13px 16px;
+    }
+    
+    #all_sens th, #extra_info th{
+        background-color: #009870;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    #all_sens tr:nth-child(even) {
+        background-color: #f3f3f3;
+    }
+    #all_sens tr:nth-child(odd) {
+        background-color: #e0e0e0;
+    }
+
+    #all_sens tr:hover {
+        background-color: lightblue;
+    }
+
+    /*Extra info for task 4, this table is hidden until the show details button is clicked*/
+    #extra_info{
+        display:none;
+        overflow:auto;
+        float:center;
+    }
+    
+
+    
+    /*Filter Style section*/
+    /*This centers the three selector divs*/
+    #selector_divs{
+        text-align: center;
+    }
+    /*Creating more aesthetic defaults for the selectors and their divs*/
+    .selector{
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        width: 200px;
+        font-size: 15px;
+        display: inline-block;
+        background: #7fc52f;
+        color: #ffffff;
+        border-radius:4%;
+        margin: 0px 3px 2px 3px;
+    }
+    /*Altering the selection dropdown menu -- Code taken from https://github.com/filamentgroup/select-css/blob/master/src/select-css.css*/
+    .sel_drop{
+        display: block;
+        text-align: center;
+        font-size: 16px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 700;
+        color: #444;
+        line-height: 1.3;
+        padding: .6em 1.4em .5em .8em;
+        width: 100%;
+        box-sizing:border-box;
+        margin: 0;
+        border: 1px solid #aaa;
+        box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+        border-radius: .5em;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #fff;
+        background-image: url('https://clemenscoaching.com/wp-content/uploads/2019/04/CC-site-icon.png'),
+          linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+        background-repeat: no-repeat, repeat;
+        /* arrow icon position (1em from the right, 50% vertical) , then gradient position*/
+        background-position: right .7em top 50%, 0 0;
+        /* icon size, then gradient */
+        background-size: .65em auto, 100%;
+    }
+    
+        .sel_drop:hover {
+        border-color: #5ff2f7;
+        letter-spacing: .03em;
+    }
+
+    /*Footer Design*/
+    #foot{
+        display:inline-block; /*Added so the leader senator text does not cover the footer*/
+        margin: 0 auto;
+        padding: 20px 5%;
+        width: 90%;
+        text-align: center;
+        background-color:#009870;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: large;
+        color: #ffffff;
+    }
+    
+    /* CSS animation for the senator count starts here -- Code was taken from https://alvarotrigo.com/blog/css-text-animations/*/
+     
+     .title-word {
+      animation: color-animation 6s linear infinite;
+    }
+
+    .title-word-1 {
+      --color-1: #e31c1c;
+      --color-4: #e31c1c;
+      --color-2: #2559d0;
+      --color-3: #ffffff;
+
+    } 
+
+    @keyframes color-animation {
+      0%    {color: var(--color-1)}
+      10%    {color: var(--color-4)}
+      90%   {color: var(--color-2)}
+      100%   {color: var(--color-3)}
+    }
+
+    .title {
+      font-weight: 800;
+      font-size: 8.5vw;
+      text-transform: uppercase;
+    }
+    
+    /* CSS animation for the senator count ends here */
+
+</style>
+</head>
+
+<body>
+    <!-- Headers for the page and the header image div with its URL -->
+    <header>
+        <h1>Information on the Senators in the US Congress</h1>
+        <h2>Scroll to read the information</h2>
+    </header>
+    
+    <div id="congress">
+        <img src="https://solomonedwards.com/wp-content/uploads/2022/02/Government-Website-Header_400px.png" alt="US Senate">
+    </div>
+    <!-- Left Encompasing Div for senator information Divs total_sen and leaver_sen -->
+<div id=container1>
+        <!--Display the total number of senators-->
+        <div id ="total_sen"> If you see this then the javacsript for this div has not worked or the JSON data was not handled correctly!</div>
+        <!--Display the senators with leadership titles-->
+        <div id ="leader_sen"> If you see this then the javacsript for this div has not worked or the JSON data was not handled correctly!</div>
+    </div>
+    <!-- Right Encompasing Div for senator information Divs  -->
+<div id="container2">
+    <!--Jump to this location so we can see the extra info on the senator-->
+    <div id="jump_here"></div>
+
+    <!--This table contains the extra information on each senator but is hidden until a button is clicked-->
+    <div id="extra_info">If you see this then the javacsript for this div has not worked or the JSON data was not handled correctly!</div>
+
+
+    <h2>Below is a filterable table containing information on all US Senators:</h2>
+    <!--Creating the filters for the table-->
+    <div id = "selector_divs">
+        <div class ="selector"><h2>Choose a Party</h2>
+            <select class="sel_drop" id="party_drop" oninput="senator_select()" ></select>
+        </div>
+        <div class ="selector"><h2>Choose a State</h2>
+            <select class="sel_drop" id="state_drop" oninput="senator_select()" ></select>
+        </div>
+        <div class ="selector"><h2>Choose a Rank</h2>
+            <select class="sel_drop" id="rank_drop" oninput="senator_select()" ></select>
+        </div>
+    </div>
+
+
+    <!--This is the table with all the senators-->
+    <div id ="all_sens">If you see this then the javacsript for this div has not worked or the JSON data was not handled correctly!</div>
+    <!--Line breaks to make space between table and the footer-->
+
+    <br><br><br><br><br><br><br><br><br><br><br>
+</div>
+    <footer>
+        <div id="foot">
+            <p>Copyright 2022 Cian Belton and Arnas Luko. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+
+//Call to read out JSON data
+var xmlhttp= new XMLHttpRequest();
+var url="senators.json";
+
+xmlhttp.onreadystatechange= function(){
+    if(xmlhttp.readyState==4 && xmlhttp.status==200){
+        //Parse senators.json
+        var p_obj =JSON.parse(xmlhttp.responseText);
+        //call below function to deal with entire file
+        senatorsFunction(p_obj);
+    }
+};
+
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+//Start of functions
+function senatorsFunction(object){
+    //read objects into easier handle obj
+    var obj=object.objects;
+
+//Get the total number of senators in each party
+    var tot_rep=0;
+    var tot_dem=0;
+    var other=0;
+
+    for(var i=0;i<obj.length; i++){
+        //senator number one is stored in position 0
+        var senator=[];
+        var party=[];
+        senator[i]=obj[i];
+        party[i]=senator[i].party;
+        if (party[i]=="Republican"){
+            tot_rep+=1
+        }
+        else if (party[i]=="Democrat"){
+            tot_dem+=1
+        }
+        else{
+            other+=1
+        }
+    }
+    // Variables printed on the left of the page displaying total number of US senators in each party. 
+    var num_out ="<br><h3 class='Title''><span class='title-word title-word-1'>The number of Democrats in the Senate:"+tot_dem+"</h3><br>";
+    num_out+="<h3 class='Title''><span class='title-word title-word-1'>The number of Republicans in the Senate:"+tot_rep+"</h3><br>";
+    num_out+="<h3 class='Title''><span class='title-word title-word-1'>The number of Independents in the Senate:"+other+"</h3>"
+
+    //write the string num_out to the div total_sen
+    document.getElementById("total_sen").innerHTML = num_out;
+
+
+//Create a list of all senators with leadership roles
+    //Group them by party
+    var leadership_role=[];
+    var senator_fname=[];
+    var senator_lname=[];
+    var d_party=[];
+    var d=0;//counts internal democrat
+    var d_leader_arr=[];
+    var r_party=[];
+    var r=0;//counts internal rep
+    var r_leader_arr=[];
+    var k=0;//for total people with title
+    var leader_out="<h2>The Senators with Leadership Roles:</h2>";
+    for(var i=0;i<obj.length; i++){
+        //senator number one is stored in position 0
+        senator[i]=obj[i];
+        
+        //if they have a leadership title
+        if (senator[i].leadership_title!=null){
+            
+            senator_fname[k]=senator[i].person.firstname;//store the senators first name
+            senator_lname[k]=senator[i].person.lastname;//store their lastname
+            leadership_role[k]=senator[i].leadership_title;//store their title
+            //if the senator at this position is a democrat add them to the democrat array
+            if (senator[i].party=="Democrat"){
+                d_party[d]=senator[i].party;
+                d_leader_arr[d]="<p>"+leadership_role[k]+": "+ senator_fname[k]+" "+senator_lname[k]+" ("+d_party[d]+")"+"</p>";
+                d++;
+            }//otherwise add them to the republican array
+            else if (senator[i].party=="Republican"){
+                r_party[r]=senator[i].party;
+                r_leader_arr[r]="<p>"+leadership_role[k]+": "+ senator_fname[k]+" "+senator_lname[k]+" ("+r_party[r]+")"+"<p>";
+                r++;
+            }
+            //there are no Independents with leadership roles
+            k++
+        }
+    }
+    //Removing commas from both arrays
+    d_leader_arr=d_leader_arr.join(" ")
+    r_leader_arr=r_leader_arr.join(" ")
+    //concatenate the array
+    leader_out+=d_leader_arr+r_leader_arr;
+    document.getElementById("leader_sen").innerHTML = leader_out;
+
+//First create the output table ordered by party
+    var table_out = "<table id='senator_table'><tr><th>Name</th><th>Surname</th><th>Party</th><th>State</th><th>Gender</th><th>Rank</th><th>Details</th></tr>";
+    var dem_out=[];
+    var rep_out=[];
+    var ind_out=[];
+    var party_array=[];
+    var state_array=[];
+    var rank_array=[];
+    d=0;//reset these counters for use in the below loop
+    r=0;
+    ind=0;
+    for (var i=0;i<obj.length; i++) 
+    {    
+        senator[i]=obj[i];
+        var firstname = senator[i].person.firstname;
+        var lastname = senator[i].person.lastname;
+        var party = senator[i].party;
+        //Task 3
+        party_array[i]=party;
+        var state = senator[i].state; 
+        //Task 3 - state_array stores all the states for selector dropdown string
+        state_array[i]=state;
+        var gender = senator[i].person.gender_label;
+        var senator_rank = senator[i].senator_rank_label; 
+        //Task 3
+        rank_array[i]=senator_rank;
+        //order the table by party as default, create each row with the required data for each senator
+            //adding in button for task 4 using first and last name as unique identifier to create extra info
+            //important to pass in the names as strings to the function
+        if (party=="Democrat"){
+            dem_out[d]="<tr><td>" + firstname + "</td><td>" + lastname + "</td><td>" + party + "</td><td>" + state + "</td><td>" + gender + "</td><td>" + senator_rank +"</td><td><button onclick=\"showextradetails('"+firstname+"','"+lastname+"')\">Show details</button></td></tr>";
+            d++;
+        }
+        else if (party=="Republican"){
+            rep_out[r]="<tr><td>" + firstname + "</td><td>" + lastname + "</td><td>" + party + "</td><td>" + state + "</td><td>" + gender + "</td><td>" + senator_rank + "</td><td><button onclick=\"showextradetails('"+firstname+"','"+lastname+"')\">Show details</button></td></tr>";
+            r++;
+        }
+        else{
+            ind_out[ind]="<tr><td>" + firstname + "</td><td>" + lastname + "</td><td>" + party + "</td><td>" + state + "</td><td>" + gender + "</td><td>" + senator_rank + "</td><td><button onclick=\"showextradetails('"+firstname+"','"+lastname+"')\">Show details</button></td></tr>";
+            ind++;
+        }
+    }
+    //remove the commas in the arrays
+    dem_out=dem_out.join(" ");
+    rep_out=rep_out.join(" ");
+    ind_out=ind_out.join(" ");
+    //output table organised by party as default
+    table_out+=dem_out+rep_out+ind_out+"</table>";
+    
+    // Add the new html code to the div element with id = 'all_sens'.
+    document.getElementById("all_sens").innerHTML = table_out;
+
+//Now for filtering- avoid hardcoding the lists
+    //get unique values in an array
+    function removeduplicates(a){
+    out=Array.from(new Set(a));
+    return out
+    }
+
+//string for party dropdown:
+    party_array=removeduplicates(party_array);
+    //sort alphabetically
+    party_array=party_array.sort();
+    //loop through to make the html for the dropdown
+    var party_out="<option>Show All</option>";
+    for(var i=0;i<party_array.length;i++){
+        
+        party_out+="<option>"+party_array[i]+"</option>";
+    }
+    //return the html
+    document.getElementById("party_drop").innerHTML =party_out;
+
+//string for states dropdown:
+    state_array=removeduplicates(state_array);
+    state_array=state_array.sort();
+    //loop through
+    var state_out="<option>Show All</option>";
+    for(var i=0;i<state_array.length;i++){
+        
+        state_out+="<option>"+state_array[i]+"</option>";
+    }
+    document.getElementById("state_drop").innerHTML =state_out;
+
+//string for rank dropdown:
+    rank_array=removeduplicates(rank_array);
+    rank_array=rank_array.sort();
+    //loop through
+    var rank_out="<option>Show All</option>";
+    for(var i=0;i<rank_array.length;i++){
+        
+        rank_out+="<option>"+rank_array[i]+"</option>";
+    }
+    document.getElementById("rank_drop").innerHTML =rank_out;
+
+//TASK 4 create table for extra information. Include first and last name so function can find it and all extra details. Can't see this as it is set to display none
+
+    var extra_out = "<table id='extra_table'><tr><th>Name</th><th>Surname</th><th>Office</th><th>Date of Birth</th><th>Start Date</th><th>Twitter Id</th><th>Youtube Id</th><th>Website</th></tr>";
+    //find the extra info for the provided first and lastnames
+    for (var i=0;i<obj.length; i++) {
+        senator[i]=obj[i];
+        //access the data by looping through the objects
+        var firstname = senator[i].person.firstname;
+        var lastname = senator[i].person.lastname;
+        var office=senator[i].extra.office;
+        var dob=senator[i].person.birthday;
+        var start_d=senator[i].startdate;
+        var twitter=senator[i].person.twitterid;
+        var youtube=senator[i].person.youtubeid;
+        var website=senator[i].website;
+
+        //set null values to -
+        //If there are null values present in table, it will throw an error when parsing through the rows in function showextradetails()
+        if(twitter == null){
+            twitter='-';
+        }
+        else if(youtube==null){
+            youtube='-';
+        }
+        else if(website==null){
+            website='-';
+        }
+        //make the html for the table output. Ensure the website link is clickable to open in another page
+        extra_out+="<tr><td>"+firstname+"</td><td>"+lastname+"</td><td>"+office+"</td><td>"+dob+"</td><td>"+start_d+"</td><td>"+twitter+"</td><td>"+youtube+"</td><td><a href='"+website+"' target='_blank'>My Website</a></td></tr>";       
+   }
+   // Add the new html code to the div element with id = 'extra info'
+   document.getElementById("extra_info").innerHTML = extra_out;
+}
+
+
+//One function to filter the whole table
+function senator_select(){
+    //get a list of the options in each drop down menu
+    var list_p=document.getElementById("party_drop");
+    var list_s=document.getElementById("state_drop");
+    var list_r=document.getElementById("rank_drop");
+    //find what the current value is set to
+    var dropdown_p =list_p.value;
+    var dropdown_s =list_s.value;
+    var dropdown_r =list_r.value;
+    //import the table to be filtered
+    var table=document.getElementById('senator_table');
+    //store each row in row
+    var row=table.getElementsByTagName("tr");
+
+    //start array at 1 as first row is the heading
+    for(var i=1; i<row.length; i++){
+        //store each data element in data
+        var data=row[i].getElementsByTagName("td")
+        //party data in 3rd column
+        var data_party=data[2];
+        //state data in 4th
+        var data_state=data[3];
+        //rank data in 6th
+        var data_rank=data[5];
+        //boolean statement combining the 3 filters with logical AND.
+        // if show all or the current dropdown value is the same as the current row, then show the current row, else hide it
+        //Compare the current dropdown value with the corresponding data element in the row using innerHTML
+        if ((dropdown_p =="Show All" || dropdown_p == data_party.innerHTML) && (dropdown_s=="Show All" || dropdown_s==data_state.innerHTML) && (dropdown_r=="Show All" || dropdown_r==data_rank.innerHTML)){
+                row[i].style.display='';
+        }
+        else{
+            row[i].style.display = "none";
+        }
+    }
+
+}
+
+//Function takes in the name and lastname of the person which the button was clicked on 
+function showextradetails(firstname,lastname){
+    var out_string=[];
+    //read in the extra information table
+    var table_extra=document.getElementById('extra_info');
+    //store it by row
+    var row=table_extra.getElementsByTagName("tr");
+    //loop through, starting at 1 as 0 is the header
+    for(var i=1; i<row.length; i++){
+        //store each data element in data
+        var data=row[i].getElementsByTagName("td")
+
+        //first name in 1st position
+        var data_fname=data[0];
+        //lastname in 2nd
+        var data_lname=data[1];
+        //if the name that was passed to this function matches the data in the extra information table
+        //display this row, otherwise don't display it
+        if(firstname==data_fname.innerHTML && lastname==data_lname.innerHTML){
+            row[i].style.display='';
+        }
+        else{
+            row[i].style.display = "none";
+        }
+    }
+    //reset the hidden extra information table to display the now single row of data required
+    table_extra.style.display='block';
+
+    //scroll up to the new information
+    document.getElementById("jump_here").scrollIntoView({behavior:"smooth"});
+}
+</script>    
+</body>
